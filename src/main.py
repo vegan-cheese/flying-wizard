@@ -37,7 +37,6 @@ def main():
     player_is_jumping = False
     player_jump_counter = 10
     player_y_velocity = 0
-
     player_collided = False
 
     jump_counter_start = 20
