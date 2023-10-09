@@ -26,6 +26,9 @@ def gameplay_loop(window: pygame.Surface):
     player_y_velocity = 0
     player_collided = False
 
+    player_image = pygame.transform.scale(pygame.image.load(
+        "assets/images/wizard.png"), player_dimensions)
+
     jump_counter_start = 20
     jump_counter_end = -20
 
@@ -36,7 +39,9 @@ def gameplay_loop(window: pygame.Surface):
     obstacles.append(create_obstacle(player_dimensions,
                      obstacle_space, window))
 
-    background_colour = pygame.Color(0, 0, 0)
+    obstacle_image = pygame.image.load("assets/images/obstacle.png")
+
+    background_colour = pygame.Color(11, 226, 230)
 
     score = 0
 
@@ -111,15 +116,13 @@ def gameplay_loop(window: pygame.Surface):
 
         # Draw obstacles
         for obstacle in obstacles:
-            pygame.draw.rect(window, pygame.Color(0, 0, 255),
-                             pygame.Rect(obstacle[2], 0, obstacle_width, obstacle[0]))
-            pygame.draw.rect(window, pygame.Color(0, 255, 0), pygame.Rect(
-                obstacle[2], obstacle[0] + round(player_dimensions.y) + obstacle_space, obstacle_width, obstacle[1]))
+            window.blit(pygame.transform.scale(obstacle_image,
+                        (obstacle_width, obstacle[0])), (obstacle[2], 0))
+            window.blit(pygame.transform.scale(obstacle_image, (obstacle_width, obstacle[1])), (
+                obstacle[2], obstacle[0] + round(player_dimensions.y) + obstacle_space))
 
         # Draw player
-        pygame.draw.rect(window, pygame.Color(255, 0, 0), pygame.Rect(
-            player_position.x, player_position.y, player_dimensions.x, player_dimensions.y)
-        )
+        window.blit(player_image, player_position)
 
         # Write score
         font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", 100)
