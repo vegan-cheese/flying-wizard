@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 
 def create_obstacle(player_size: pygame.Vector2, obstacle_extra_space: int, game_window: pygame.Surface) -> list[int]:
@@ -43,6 +44,16 @@ def gameplay_loop(window: pygame.Surface):
 
     background_colour = pygame.Color(11, 226, 230)
 
+    number_of_clouds = 3
+    cloud_size = pygame.Vector2(210, 70)
+    clouds = []
+    for index in range(number_of_clouds):
+        clouds.append([
+            pygame.Vector2(window.get_width(), random.randint(0, window.get_height() - math.ceil(cloud_size.y))),
+            random.randint(100, 500)
+        ])
+    cloud_image = pygame.transform.scale(pygame.image.load("assets/images/cloud.png"), cloud_size)
+
     score = 0
 
     keep_window_open = True
@@ -83,7 +94,7 @@ def gameplay_loop(window: pygame.Surface):
 
         # Manage Obstacles
         delete_obstacles = []
-        for index in range(0, len(obstacles)):
+        for index in range(len(obstacles)):
             # Move obstacle left
             if player_collided == False:
                 obstacles[index][2] -= 200 * delta_time
@@ -113,6 +124,19 @@ def gameplay_loop(window: pygame.Surface):
                 obstacles.pop(index)
 
         window.fill(background_colour)
+
+        for index in range(number_of_clouds):
+            # Move cloud right
+            clouds[index][0].x -= clouds[index][1] * delta_time
+
+            # If cloud is out of bounds, reset position and change height and speed
+            if clouds[index][0].x < 0 - cloud_size.x:
+                clouds[index][0].x = window.get_width()
+                clouds[index][0].y = random.randint(0, window.get_height() - math.ceil(cloud_size.y))
+                clouds[index][1] = random.randint(100, 500)
+
+            # Draw cloud
+            window.blit(cloud_image, clouds[index][0])
 
         # Draw obstacles
         for obstacle in obstacles:
