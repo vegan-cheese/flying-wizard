@@ -102,3 +102,85 @@ def start_menu(window: pygame.Surface) -> bool:
         pygame.display.update()
 
     return allow_next_scene_start
+
+def end_menu(window: pygame.Surface, final_score: int):
+    clock = pygame.time.Clock()
+
+    quit_button_area = pygame.Vector2(200, 100)
+    quit_button_rect = pygame.Rect(
+        (window.get_width() / 2) - (quit_button_area.x / 2),
+        ((window.get_height() / 3) * 2) + 20,
+        quit_button_area.x,
+        quit_button_area.y
+    )
+
+    background_colour = pygame.Color(11, 226, 230)
+
+    lose_font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", 70)
+    rendered_lose_text = lose_font.render("You Lost!", True, pygame.Color(255, 255, 255))
+    lose_text_position = pygame.Vector2((window.get_width() / 2) - (rendered_lose_text.get_width() / 2), 100)
+
+    score_font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", 50)
+    rendered_score_text = score_font.render(f"Your final score was {final_score}", True, pygame.Color(255, 255, 255))
+    score_text_position = pygame.Vector2((window.get_width() / 2) - (rendered_score_text.get_width() / 2), 200)
+
+    quit_button_font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", math.floor(quit_button_area.y) - 20)
+    rendered_quit_button_text = quit_button_font.render("Quit", True, pygame.Color(255, 255, 255))
+    quit_button_text_position = pygame.Vector2(quit_button_rect.left + ((quit_button_area.x - rendered_quit_button_text.get_width()) / 2), quit_button_rect.top)
+
+    number_of_clouds = 3
+    cloud_size = pygame.Vector2(210, 70)
+    clouds = []
+    for index in range(number_of_clouds):
+        clouds.append([
+            pygame.Vector2(window.get_width(), random.randint(0, window.get_height() - math.ceil(cloud_size.y))),
+            random.randint(100, 500)
+        ])
+    cloud_image = pygame.transform.scale(pygame.image.load("assets/images/cloud.png"), cloud_size)
+
+
+    keep_window_open = True
+    while keep_window_open:
+        clock.tick()
+        delta_time = clock.get_time() / 1000
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                keep_window_open = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1: # Mouse button 1 (left click) pressed
+                    if quit_button_rect.collidepoint(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+                        # Quit button was clicked
+                        # End game
+                        keep_window_open = False
+
+
+        window.fill(background_colour)
+
+        for index in range(number_of_clouds):
+            # Move cloud right
+            clouds[index][0].x -= clouds[index][1] * delta_time
+
+            # If cloud is out of bounds, reset position and change height and speed
+            if clouds[index][0].x < 0 - cloud_size.x:
+                clouds[index][0].x = window.get_width()
+                clouds[index][0].y = random.randint(0, window.get_height() - math.ceil(cloud_size.y))
+                clouds[index][1] = random.randint(100, 500)
+
+            # Draw cloud
+            window.blit(cloud_image, clouds[index][0])
+
+        # Lose
+        window.blit(rendered_lose_text, lose_text_position)
+
+        # Score
+        window.blit(rendered_score_text, score_text_position)
+
+
+        # Draw quit button
+        pygame.draw.rect(window, pygame.Color(0, 0, 0), quit_button_rect)
+        # Quit button text
+        window.blit(rendered_quit_button_text, quit_button_text_position)
+
+        pygame.display.update()

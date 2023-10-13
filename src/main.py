@@ -19,7 +19,10 @@ def main():
     play_game = menu.start_menu(window)
 
     if play_game:
-        gameplay.gameplay_loop(window)
+        game_lost, final_score = gameplay.gameplay_loop(window)
+        if game_lost:
+            # If window was closed on purpose, do not show end screen
+            menu.end_menu(window, final_score)
 
 
 if __name__ == "__main__":

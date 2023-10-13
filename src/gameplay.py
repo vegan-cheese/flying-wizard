@@ -14,6 +14,8 @@ def create_obstacle(player_size: pygame.Vector2, obstacle_extra_space: int, game
 def gameplay_loop(window: pygame.Surface):
     clock = pygame.time.Clock()
 
+    lost_game = False
+
     player_dimensions = pygame.Vector2(100, 100)
 
     # Make the player in the middle of the screen
@@ -88,7 +90,7 @@ def gameplay_loop(window: pygame.Surface):
         # If player is out of bounds
         if player_position.y < (0 - player_dimensions.y) or player_position.y > window.get_height():
             keep_window_open = False
-            print("You lost!")
+            lost_game = True
 
         player_rect = pygame.Rect(
             player_position.x, player_position.y, player_dimensions.x, player_dimensions.y)
@@ -156,3 +158,5 @@ def gameplay_loop(window: pygame.Surface):
         window.blit(rendered_text, pygame.Vector2(20, 20))
 
         pygame.display.update()
+
+    return lost_game, score
