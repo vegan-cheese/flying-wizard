@@ -55,9 +55,10 @@ def gameplay_loop(window: pygame.Surface):
     cloud_image = pygame.transform.scale(pygame.image.load("assets/images/cloud.png"), cloud_size)
 
     score = 0
+    font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", 100)
 
     keep_window_open = True
-    while keep_window_open == True:
+    while keep_window_open:
         clock.tick(60)
         delta_time = clock.get_time() / 1000
 
@@ -149,7 +150,6 @@ def gameplay_loop(window: pygame.Surface):
         window.blit(player_image, player_position)
 
         # Write score
-        font = pygame.font.Font("assets/Roboto/Roboto-Regular.ttf", 100)
         rendered_text = font.render(
             f"{score}", True, pygame.Color(255, 255, 255), None)
 

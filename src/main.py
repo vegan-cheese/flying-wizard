@@ -1,5 +1,6 @@
 import pygame
 import gameplay
+import menu
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
@@ -15,7 +16,10 @@ def main():
 
     window = create_window((800, 600))
 
-    gameplay.gameplay_loop(window)
+    play_game = menu.start_menu(window)
+
+    if play_game:
+        gameplay.gameplay_loop(window)
 
 
 if __name__ == "__main__":
