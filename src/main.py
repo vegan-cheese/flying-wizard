@@ -14,7 +14,7 @@ def create_window(window_size):
 def main():
     pygame.init()
 
-    window = create_window((800, 600))
+    window = create_window((WINDOW_WIDTH, WINDOW_HEIGHT))
 
     play_game = menu.start_menu(window)
 
