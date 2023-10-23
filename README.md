@@ -21,10 +21,10 @@ This is a game where you play as a wizard on a broomstick who must avoid obstacl
  3. Enter the directory:  
  `cd flying-wizard`
  4. Create a python virtual environment:  
- `python3 -m venv game_environment`
+ `python3 -m venv game_venv`
  5. Install pygame in the environment:  
-     - Windows Powershell - `./game_environment/Scripts/pip install pygame`  
-     - Bash - `./game_environment/bin/pip install pygame`
+     - Windows Powershell - `./game_venv/Scripts/pip install pygame`  
+     - Bash - `./game_venv/bin/pip install pygame`
  6. Run the game:
-     - Windows Powershell - `./game_environment/Scripts/python src/main.py`
-      - Bash - `./game_environment/bin/python src/main.py`
+     - Windows Powershell - `./game_venv/Scripts/python src/main.py`
+      - Bash - `./game_venv/bin/python src/main.py`
