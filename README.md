@@ -24,7 +24,7 @@ This is a game where you play as a wizard on a broomstick who must avoid obstacl
  `python3 -m venv game_environment`
  5. Install pygame in the environment:  
      - Windows Powershell - `./game_environment/Scripts/pip install pygame`  
-     - Linux Bash - `./game_environment/bin/pip install pygame`
+     - Bash - `./game_environment/bin/pip install pygame`
  6. Run the game:
      - Windows Powershell - `./game_environment/Scripts/python src/main.py`
-      - Linux Bash - `./game_environment/bin/python src/main.py`
+      - Bash - `./game_environment/bin/python src/main.py`
